@@ -1,36 +1,49 @@
+name: Azure Pipelines
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 trigger:
 - main
 
+# ToDo: Replace the agent pool name, if you are using Udacity Cloud lab.
+# Otherwise, comment out the line below.
+pool: myAgentPool
+
+variables:
+  python.version: '3.7.6'
+  # ToDo: Replace the service connection name as used in the DevOps project settings
+  azureServiceConnectionId: 'myAzureServiceConnection'
+  resourceGroupName: 'Azuredevops3'
+  # Project root folder. Point to the folder containing manage.py file.
+  projectRoot: $(System.DefaultWorkingDirectory)
+  # Environment name
+  environmentName: 'test'
+
 stages:
-- stage: "Create_Infrastructure"
+#--------------------------------------------#
+# BUILD STAGE
+#--------------------------------------------#
+- stage: Build
   jobs:
-  - job: provision
-    displayName: 'Provision Infrastructure'
-    pool:
-      vmimage: 'ubuntu-18.04'
+
+  - job: BuildInfrastructure
     steps:
-    
-    - task: DownloadSecureFile@1
-      displayName: Download Terraform Variables file
-      name: tfvars
-      inputs:
-        secureFile: 'terraform.tfvars'
-    
-    - script: |
-        sudo cp $(tfvars.secureFilePath) terraform/environments/test/terraform.tfvars
-      displayName: Copy terraform.tfvars File
+
+    # Run Terraform Init on the pipeline agent
+    # ToDo: Replace the resource group name, storage account name, and container name below
 
     - task: TerraformTaskV1@0
       displayName: Terraform Init
       inputs:
         provider: 'azurerm'
         command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test/'
-        backendServiceArm: 'terraform-sa'
-        backendAzureRmResourceGroupName: 'terraform'
-        backendAzureRmStorageAccountName: 'tstate6853'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'terraform.state'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        backendServiceArm: '$(azureServiceConnectionId)'
+        backendAzureRmResourceGroupName: 'Azuredevops'
+        backendAzureRmStorageAccountName: 'qualityblobstorage'
+        backendAzureRmContainerName: 'terraform'
+        backendAzureRmKey: 'test.terraform.tfstate'
 
     - task: TerraformTaskV1@0
       displayName: Terraform Apply
@@ -39,42 +52,5 @@ stages:
         command: 'apply'
         commandOptions: |
           -auto-approve 
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test/'
-        environmentServiceNameAzureRM: 'terraform-sa'
-
-- stage: Build
-  jobs:
-  - job: build_artifacts
-    displayName: Build Artifacts
-    pool:
-      vmImage: 'ubuntu-18.04'
-    steps:
-    - task: ArchiveFiles@2
-      displayName: Archive FakeRestAPI
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
-        verbose: true
-
-    - task: PublishPipelineArtifact@1
-      displayName: Publish FakeRestAPI artifact
-      inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)/fakerestapi-$(Build.BuildId).zip'
-        artifactName: 'fakerestapi'
-
-    - task: ArchiveFiles@2
-      displayName: Archive Selenium
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/selenium-$(Build.BuildId).zip'
-        verbose: true
-
-    - task: PublishPipelineArtifact@1
-      displayName: Publish Selenium artifact
-      inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)/selenium-$(Build.BuildId).zip'
-        artifactName: 'selenium'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
