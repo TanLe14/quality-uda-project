@@ -6,13 +6,15 @@ name: Azure Pipelines
 trigger:
 - main
 
-# ToDo: Replace the agent pool name, if you are using Udacity Cloud lab.
-# Otherwise, comment out the line below.
+pool: Default
 
 variables:
   python.version: '3.7.6'
   # ToDo: Replace the service connection name as used in the DevOps project settings
   azureServiceConnectionId: 'quality-pro-conn'
+  resourceGroupName: 'Azuredevops'
+  # Project root folder. Point to the folder containing manage.py file.
+  projectRoot: $(System.DefaultWorkingDirectory)
   # Environment name
   environmentName: 'test'
 
@@ -24,32 +26,51 @@ stages:
   jobs:
 
   - job: BuildInfrastructure
-    pool:
-      vmimage: 'ubuntu-latest'
     steps:
-      
+    #--------------------------------------------#
+    # Use Terraform to create the Infrastructure
+    # Install Terraform on the pipeline agent
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: 'Terrafom installation'
+      inputs:
+        terraformVersion: '1.2.9'
 
     # Run Terraform Init on the pipeline agent
     # ToDo: Replace the resource group name, storage account name, and container name below
 
-    - task: TerraformTaskV1@0
-      displayName: Terraform Init
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: 'Terrafom init'
       inputs:
         provider: 'azurerm'
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'Azuredevops'
-        backendAzureRmStorageAccountName: 'qualityblobstorage'
-        backendAzureRmContainerName: 'terraform'
+        backendAzureRmStorageAccountName: 'tfstate1592931378'
+        backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'test.terraform.tfstate'
 
-    - task: TerraformTaskV1@0
-      displayName: Terraform Apply
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: Terraform validate
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+
+    # Run Terraform Apply
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: Terraform apply
       inputs:
         provider: 'azurerm'
         command: 'apply'
-        commandOptions: |
-          -auto-approve 
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
+
+    # Destroy the resources in Azure by running a separate pipeline.
+
+    # - task: TerraformTaskV3@3
+    #   displayName: Terraform destroy
+    #   inputs:
+    #     provider: 'azurerm'
+    #     command: 'destroy'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+    #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
