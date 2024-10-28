@@ -19,11 +19,6 @@ stages:
     - script: |
         sudo cp $(tfvars.secureFilePath) terraform/environments/test/terraform.tfvars
       displayName: Copy terraform.tfvars File
-      
-    - task: TerraformInstaller@0
-      displayName: Install Terraform
-      inputs:
-        terraformVersion: '0.14.8'
 
     - task: TerraformTaskV1@0
       displayName: Terraform Init
