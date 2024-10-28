@@ -33,6 +33,10 @@ stages:
       inputs:
         secureFile: terraform.tfvars
     - script: ls
+    - script: |
+        mkdir -p $(Build.ArtifactStagingDirectory)/your-target-directory
+        mv $(DownloadedFile.secureFilePath) $(Build.ArtifactStagingDirectory)/terraform/environments/test
+    - script: cd $(Build.ArtifactStagingDirectory)/terraform/environments/test && ls
     
     #--------------------------------------------#
     # Use Terraform to create the Infrastructure
