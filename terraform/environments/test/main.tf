@@ -7,10 +7,10 @@ provider "azurerm" {
 }
 terraform {
   backend "azurerm" {
-    storage_account_name = "qualityblobstorage"
-    container_name       = "terraform"
-    key                  = "test.terraform.tfstate"
-    #access_key           = ""
+    storage_account_name = ""
+    container_name       = ""
+    key                  = ""
+    access_key           = ""
   }
 }
 
