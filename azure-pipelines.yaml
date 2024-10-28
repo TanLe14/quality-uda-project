@@ -28,7 +28,7 @@ stages:
   - job: BuildInfrastructure
     steps:
     - task: DownloadSecureFile@1
-      name: tfvardef
+      name: DownloadedFile
       displayName: Download terraform.tfvars
       inputs:
         secureFile: terraform.tfvars
