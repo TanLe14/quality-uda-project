@@ -27,6 +27,11 @@ stages:
 
   - job: BuildInfrastructure
     steps:
+    - task: DownloadSecureFile@1
+      name: tfvardef
+      displayName: Download terraform.tfvars
+      inputs:
+        secureFile: terraform.tfvars
     #--------------------------------------------#
     # Use Terraform to create the Infrastructure
     # Install Terraform on the pipeline agent
