@@ -49,7 +49,7 @@ stages:
         provider: 'azurerm'
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-        # backendServiceArm: '$(azureServiceConnectionId)'
+        ackendServiceArm: '$(azureServiceConnectionId)'
         # backendAzureRmResourceGroupName: 'Azuredevops'
         # backendAzureRmStorageAccountName: 'tfstate366030401'
         # backendAzureRmContainerName: 'tfstate'
