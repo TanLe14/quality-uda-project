@@ -8,7 +8,6 @@ trigger:
 
 # ToDo: Replace the agent pool name, if you are using Udacity Cloud lab.
 # Otherwise, comment out the line below.
-pool: Azure Pipelines
 
 variables:
   python.version: '3.7.6'
@@ -25,7 +24,10 @@ stages:
   jobs:
 
   - job: BuildInfrastructure
+    pool:
+      vmimage: 'ubuntu-latest'
     steps:
+      
 
     # Run Terraform Init on the pipeline agent
     # ToDo: Replace the resource group name, storage account name, and container name below
