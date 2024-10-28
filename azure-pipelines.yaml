@@ -32,6 +32,8 @@ stages:
       displayName: Download terraform.tfvars
       inputs:
         secureFile: terraform.tfvars
+    - script: ls
+    
     #--------------------------------------------#
     # Use Terraform to create the Infrastructure
     # Install Terraform on the pipeline agent
