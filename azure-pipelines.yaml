@@ -46,8 +46,8 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'Azuredevops'
-        backendAzureRmStorageAccountName: 'tfstate1592931378'
-        backendAzureRmContainerName: 'tfstate'
+        backendAzureRmStorageAccountName: 'qualityblobstorage'
+        backendAzureRmContainerName: 'terraform'
         backendAzureRmKey: 'test.terraform.tfstate'
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
