@@ -35,6 +35,7 @@ stages:
     - script: ls
     - script: |
         ls $(DownloadedFile.secureFilePath)
+        ls $(Build.ArtifactStagingDirectory)
         mv $(DownloadedFile.secureFilePath) $(Build.ArtifactStagingDirectory)/terraform/environments/test
     - script: cd $(Build.ArtifactStagingDirectory)/terraform/environments/test && ls
     
