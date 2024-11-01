@@ -102,8 +102,6 @@ stages:
   displayName: Deployments
   jobs:
   - deployment: FakeRestAPIDeploy
-    pool:
-      vmImage: 'Ubuntu-latest'
     environment: 'WEBAPP-TEST'
     strategy:
       runOnce:
