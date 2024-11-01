@@ -7,6 +7,11 @@ provider "azurerm" {
 }
 terraform {
   backend "azurerm" {
+    subscription_id      = "<subscription GUID storage account is in>"
+    resource_group_name  = "terraform-rg"
+    storage_account_name = "myterraform"
+    container_name       = "tfstate"
+    key                  = "root.terraform.tfstate"
   }
 }
 
