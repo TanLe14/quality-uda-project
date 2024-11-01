@@ -33,10 +33,9 @@ stages:
       inputs:
         secureFile: terraform.tfvars
     - script: ls
-    - script: |
-        ls $(DownloadedFile.secureFilePath)
-        ls $(Build.ArtifactStagingDirectory)
-        mv $(DownloadedFile.secureFilePath) $(System.DefaultWorkingDirectory)/terraform/environments/test
+    - script: ls $(Build.SourcesDirectory)
+    - script: ls $(Build.ArtifactStagingDirectory)
+    - script: mv $(DownloadedFile.secureFilePath) $(Build.SourcesDirectory)/terraform/environments/test
     - script: cd $(Build.ArtifactStagingDirectory)/terraform/environments/test && ls
     
     #--------------------------------------------#
