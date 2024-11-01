@@ -17,6 +17,8 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   # Environment name
   environmentName: 'test'
+  applicationname: 'myApplication-AppService'
+  
 
 stages:
 #--------------------------------------------#
