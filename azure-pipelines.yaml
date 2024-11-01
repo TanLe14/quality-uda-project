@@ -98,23 +98,23 @@ stages:
       artifact: drop-fakerestapi
   
 
- - stage: Deployments
-    displayName: Deployments
-    jobs:
-    - deployment: FakeRestAPIDeploy
-      pool:
-        vmImage: 'Ubuntu-latest'
-      environment: 'WEBAPP-TEST'
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: AzureWebApp@1
-              displayName: 'Deploy Azure Web App'
-              inputs:
-                azureSubscription: 'AZServiceConnection'
-                appType: 'webAppLinux'
-                appName: $(applicationname)
-                package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
-                deploymentMethod: 'auto' 
+- stage: Deployments
+  displayName: Deployments
+  jobs:
+  - deployment: FakeRestAPIDeploy
+    pool:
+      vmImage: 'Ubuntu-latest'
+    environment: 'WEBAPP-TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
+            inputs:
+              azureSubscription: 'AZServiceConnection'
+              appType: 'webAppLinux'
+              appName: $(applicationname)
+              package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+              deploymentMethod: 'auto' 
 
