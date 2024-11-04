@@ -36,8 +36,9 @@ stages:
         secureFile: terraform.tfvars
     - script: ls
     - script: echo $(DownloadedFile.secureFilePath)
-    - script: mv $(DownloadedFile.secureFilePath) $(Build.SourcesDirectory)/terraform/environments/test
     - script: ls $(Build.SourcesDirectory)
+    - script: mv $(DownloadedFile.secureFilePath) $(Build.SourcesDirectory)/terraform/environments/test
+    
     #--------------------------------------------#
     # Use Terraform to create the Infrastructure
     # Install Terraform on the pipeline agent
