@@ -112,7 +112,7 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription: '$(azureServiceConnectionId)'
-              appType: 'webAppLinux'
+              appType: 'webApp'
               appName: $(applicationname)
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               deploymentMethod: 'auto' 
