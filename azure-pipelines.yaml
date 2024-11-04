@@ -87,12 +87,12 @@ stages:
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
     #--------------------------------------------#
     - task: ArchiveFiles@2
-        displayName: "Archive FakeRestAPI"
-        inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
-          includeRootFolder: false
-          archiveType: "zip"
-          archiveFile: '$(Build.BuildId)-fakerestapi.zip'
+      displayName: "Archive FakeRestAPI"
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+        includeRootFolder: false
+        archiveType: "zip"
+        archiveFile: '$(Build.BuildId)-fakerestapi.zip'
     
       - task: PublishPipelineArtifact@1
         displayName: "Upload farestapi Package"
