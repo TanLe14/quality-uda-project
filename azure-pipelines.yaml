@@ -95,7 +95,7 @@ stages:
         archiveFile: '$(Build.BuildId)-fakerestapi.zip'
     - task: PublishPipelineArtifact@1
       displayName: 'Upload Package FakeRestAPI'
-      input:
+      inputs:
         targetPath: '$(Build.BuildId)-fakerestapi.zip'
         artifact: drop-fakerestapi
   
