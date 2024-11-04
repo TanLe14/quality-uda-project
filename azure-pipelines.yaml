@@ -92,10 +92,12 @@ stages:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+        archiveFile: '$(Build.BuildId)-fakerestapi.zip'
+    - task: PublishPipelineArtifact@1
       displayName: 'Upload Package FakeRestAPI'
-      artifact: drop-fakerestapi
+      input:
+        targetPath: '$(Build.BuildId)-fakerestapi.zip'
+        artifact: drop-fakerestapi
   
 
 - stage: Deployments
