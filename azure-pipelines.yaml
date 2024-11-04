@@ -34,9 +34,9 @@ stages:
       displayName: Download terraform.tfvars
       inputs:
         secureFile: terraform.tfvars
-    - script: ls
+    - script: pwd
     - script: echo $(DownloadedFile.secureFilePath)
-    - script: mv $(DownloadedFile.secureFilePath) $(System.DefaultWorkingDirectory)/terraform/environments/test
+    - script: mv $(DownloadedFile.secureFilePath) $(Build.SourcesDirectory)/terraform/environments/test
     
     #--------------------------------------------#
     # Use Terraform to create the Infrastructure
