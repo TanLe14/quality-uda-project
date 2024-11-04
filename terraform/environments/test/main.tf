@@ -7,9 +7,8 @@ provider "azurerm" {
 }
 terraform {
   backend "azurerm" {
-    subscription_id      = "df56a173-611b-429d-901a-af369d7d59b5"
     resource_group_name  = "Azuredevops"
-    storage_account_name = "tfstate82767390"
+    storage_account_name = "tfstate298455222"
     container_name       = "tfstate"
     key                  = "root.terraform.tfstate"
   }

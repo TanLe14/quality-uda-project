@@ -11,13 +11,13 @@ pool: Default
 variables:
   python.version: '3.7.6'
   # ToDo: Replace the service connection name as used in the DevOps project settings
-  azureServiceConnectionId: 'quality-conn'
+  azureServiceConnectionId: 'quality-uda-conn'
   resourceGroupName: 'Azuredevops'
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
   # Environment name
   environmentName: 'test'
-  applicationname: 'myApplication-appService'
+  applicationname: 'myApplication-AppService'
   
 
 stages:
@@ -34,10 +34,9 @@ stages:
       displayName: Download terraform.tfvars
       inputs:
         secureFile: terraform.tfvars
-    - script: ls
-    - script: ls $(Build.SourcesDirectory)
-    - script: ls $(Build.ArtifactStagingDirectory)
-    - script: mv $(DownloadedFile.secureFilePath) $(Build.SourcesDirectory)/terraform/environments/test
+    - script: pwd
+    - script: echo $(DownloadedFile.secureFilePath)
+    - script: mv "$(DownloadedFile.secureFilePath)" "$(Build.SourcesDirectory)/terraform/environments/test"
     
     #--------------------------------------------#
     # Use Terraform to create the Infrastructure
@@ -58,7 +57,7 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'Azuredevops'
-        backendAzureRmStorageAccountName: 'tfstate82767390'
+        backendAzureRmStorageAccountName: 'tfstate298455222'
         backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'test.terraform.tfstate'
 
@@ -87,17 +86,18 @@ stages:
     #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
     #--------------------------------------------#
-
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+        archiveFile: '$(Build.BuildId)-fakerestapi.zip'
+    - task: PublishPipelineArtifact@1
       displayName: 'Upload Package FakeRestAPI'
-      artifact: drop-fakerestapi
+      inputs:
+        targetPath: '$(Build.BuildId)-fakerestapi.zip'
+        artifact: drop-fakerestapi
   
 
 - stage: Deployments
