@@ -86,7 +86,8 @@ stages:
     #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
     #--------------------------------------------#
-
+    - script: ls '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+    
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
