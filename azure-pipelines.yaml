@@ -87,15 +87,18 @@ stages:
     #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
     #--------------------------------------------#
     - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-      displayName: 'Upload Package FakeRestAPI'
-      artifact: drop-fakerestapi
+        displayName: "Archive FakeRestAPI"
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+          includeRootFolder: false
+          archiveType: "zip"
+          archiveFile: '$(Build.BuildId)-fakerestapi.zip'
+    
+      - task: PublishPipelineArtifact@1
+        displayName: "Upload farestapi Package"
+        inputs:
+          targetPath: $(Build.BuildId)-fakerestapi.zip
+          artifactName: drop-fakerestapi
   
 
 - stage: Deployments
