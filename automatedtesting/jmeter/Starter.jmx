@@ -23,7 +23,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler">
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
           <stringProp name="BeanShellSampler.query">// A simple script
 log.info(&quot;Example&quot;);
 
@@ -43,7 +43,7 @@ return Parameters;</stringProp>
           <stringProp name="BeanShellSampler.parameters">2 OK</stringProp>
         </BeanShellSampler>
         <hashTree/>
-        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments">
             <elementProp name="hostname" elementType="Argument">
               <stringProp name="Argument.name">hostname</stringProp>
@@ -63,7 +63,7 @@ return Parameters;</stringProp>
           </collectionProp>
         </Arguments>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -100,7 +100,7 @@ return Parameters;</stringProp>
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Accept</stringProp>
@@ -110,7 +110,7 @@ return Parameters;</stringProp>
         </HeaderManager>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all Books">
-          <stringProp name="HTTPSampler.domain">20.119.144.17</stringProp>
+          <stringProp name="HTTPSampler.domain">myapplication-appservice.azurewebsites.net</stringProp>
           <stringProp name="HTTPSampler.port">443</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/api/Books</stringProp>
