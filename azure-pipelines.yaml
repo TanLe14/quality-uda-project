@@ -91,19 +91,22 @@ stages:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.BuildId)-fakerestapi.zip'
-    - task: PublishPipelineArtifact@1
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package FakeRestAPI'
-      inputs:
-        targetPath: '$(Build.BuildId)-fakerestapi.zip'
-        artifact: drop-fakerestapi
-  
+      artifact: drop-fakerestapi
 
-- stage: Deployments
-  displayName: Deployments
+#--------------------------------------------#
+# DEPLOYMENT STAGE
+#--------------------------------------------#
+- stage: Deploy
   jobs:
-  - deployment: FakeRestAPIDeploy
-    environment: 'WEBAPP-TEST'
+  #--------------------------------------------#
+  # Deploy FakeRestAPI Web App
+  # ToDo: Provide <environment name> you created in your DevOps project
+  - deployment: FakeRestAPI
+    displayName: Deploy FakeRestAPI Web App
+    environment: 'test'   # ToDo
     strategy:
       runOnce:
         deploy:
@@ -111,9 +114,9 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
-              azureSubscription: '$(azureServiceConnectionId)'
-              appType: 'webAppLinux'
-              appName: $(applicationname)
-              package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
-              deploymentMethod: 'auto' 
-
+              azureSubscription: '$(azureServiceConnectionId)'     # ToDo
+              appName: 'project3-AppService'       # ToDo
+              resourceGroupName: '$(resourceGroupName)' 
+              appType: webApp
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact.
+              deploymentMethod: auto
