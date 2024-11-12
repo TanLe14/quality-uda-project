@@ -181,7 +181,7 @@
         <hashTree/>
       </hashTree>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Book IDs CSV" enabled="true">
-        <stringProp name="filename">/home/tanlx/myagent/_work/1/s/automatedtesting/jmeter/book_ids.csv</stringProp>
+        <stringProp name="filename">/Users/tanlx/Documents/project/udacity/quality-uda-project/automatedtesting/jmeter/book_ids.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">id</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
@@ -193,7 +193,7 @@
       </CSVDataSet>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Obj book CSV" enabled="true">
-        <stringProp name="filename">/home/tanlx/myagent/_work/1/s/automatedtesting/jmeter/objs_books.csv</stringProp>
+        <stringProp name="filename">/Users/tanlx/Documents/project/udacity/quality-uda-project/automatedtesting/jmeter/objs_books.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">ID,Title, Description,PageCount,Excerpt, PublishDate</stringProp>
         <boolProp name="ignoreFirstLine">true</boolProp>
