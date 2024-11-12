@@ -158,39 +158,71 @@ stages:
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact.
               deploymentMethod: auto
           
-          - task: CmdLine@2
-            displayName: 'Run JMeter test suite against the App Service'
-            inputs:
-              script: |
-                sudo apt-get upgrade -y
-                sudo apt-get install openjdk-11-jdk -y
-                sudo apt-get install openjdk-11-jre-headless -y
-                export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
-                wget "https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.2.1.tgz"
-                tar -xf apache-jmeter-5.2.1.tgz
-                unzip -o $(Build.BuildId)-perftests.zip
-                
-                if [ ! -d "$DIR" ]; then
-                    rm -rf jmeter-html-report
-                fi
-                ./apache-jmeter-5.2.1/bin/jmeter -n -t Stress.jmx -l result-stress-test.csv -e -f -o '$(System.DefaultWorkingDirectory)/jmeter-html-report' -j '$(System.DefaultWorkingDirectory)/jmeter-stress-test.log'
-                ./apache-jmeter-5.2.1/bin/jmeter -n -t Endurance.jmx -l result-endurance-test.csv -e -f -o '$(System.DefaultWorkingDirectory)/jmeter-html-report' -j  '$(System.DefaultWorkingDirectory)/jmeter-endurance-test.log'
-          
-                # check
-                ls                                                                    
-              workingDirectory: $(Pipeline.Workspace)/drop-perftests            # ToDo: Use the artifact name from the task above
-
-          - task: ArchiveFiles@2
-            displayName: 'Archive JMeter report'
-            inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/jmeter-html-report'
-              includeRootFolder: false
-              archiveType: 'zip'
-              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter-report.zip'
-
-          # JMeter report - Publish
-          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter-report.zip
-            displayName: 'Upload Package JMeter report'
-            artifact: drop-jmeter-report
-
+ - job: jmeter_tests
+    displayName: jMeter Tests
+    steps:
+      - task: Bash@3
+        displayName: Install jMeter
+        inputs:
+          targetType: 'inline'
+          script: |
+            sudo apt-get install openjdk-11-jre-headless -y
+            java -version
+            wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.1.tgz -O jmeter.tgz
+            tar xzvf jmeter.tgz
+            apache-jmeter-5.4.1/bin/jmeter --version
+            # create log directory
+            mkdir -p log/jmeter
+            pwd
+            ls -la
+      - task: Bash@3
+        displayName: Run Stress Test
+        inputs:
+          targetType: 'inline'
+          script: |
+            apache-jmeter-5.4.1/bin/jmeter -n -t automatedtesting/jmeter/Stress.jmx \
+                                     -l log/jmeter/stress-test-result.csv \
+                                     -e -f -o log/jmeter/stress-test-report.html \
+                                     -j log/jmeter/jmeter-stress-test.log
+      - task: Bash@3
+        displayName: Run Endurance Test
+        inputs:
+          targetType: 'inline'
+          script: |
+            apache-jmeter-5.4.1/bin/jmeter -n -t automatedtesting/jmeter/Endurance.jmx \
+                                     -l log/jmeter/endurance-test-result.csv \
+                                     -e -f -o log/jmeter/endurance-test-report.html \
+                                     -j log/jmeter/jmeter-endurance-test.log
+      
+      - task: ArchiveFiles@2
+        displayName: Archive JMeter stress test HTML report
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-report.html'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report-$(Build.BuildId).zip'
+          verbose: true
+      - task: ArchiveFiles@2
+        displayName: Archive JMeter endurance test HTML report
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-report.html'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report-$(Build.BuildId).zip'
+          verbose: true
+      - task: Bash@3
+        displayName: Clean Up Tests
+        inputs:
+          targetType: 'inline'
+          script: |
+            rm -rf log/jmeter/stress-test-report.html
+            rm -rf log/jmeter/endurance-test-report.html
+            cd log/jmeter
+            pwd
+            ls -la
+      - task: PublishPipelineArtifact@1
+        displayName: Publish JMeter logs
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
+          artifactName: 'drop-jmeter-logs'
               
