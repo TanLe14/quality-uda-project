@@ -158,7 +158,7 @@ stages:
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact.
               deploymentMethod: auto
           
- - job: jmeter_tests
+  - job: jmeter_tests
     displayName: jMeter Tests
     steps:
       - task: Bash@3
