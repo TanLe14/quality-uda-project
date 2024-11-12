@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1731400601244,3677,Get ALL Books,200,OK,Stress Test 1-1,text,true,,919689,205,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books,1370,0,1047
+1731400604925,293,Post Books,200,OK,Stress Test 1-1,text,true,,750,396,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books,291,0,0
+1731400601244,4189,Get ALL Books,200,OK,Stress Test 1-2,text,true,,921924,205,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books,1370,0,1047
+1731400605220,276,PUT,200,OK,Stress Test 1-1,text,true,,750,397,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books/1,276,0,0
+1731400605434,268,Post Books,200,OK,Stress Test 1-2,text,true,,750,396,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books,268,0,0
+1731400605498,278,Delete Book,200,OK,Stress Test 1-1,,true,,537,238,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books/1?id=1,278,0,0
+1731400605705,312,PUT,200,OK,Stress Test 1-2,text,true,,750,397,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books/2,312,0,0
+1731400605778,290,GetBook,200,OK,Stress Test 1-1,text,true,,4403,212,2,2,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books/1?id=1,288,0,0
+1731400606019,368,Delete Book,200,OK,Stress Test 1-2,,true,,537,238,1,1,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books/2?id=2,368,0,0
+1731400606388,314,GetBook,200,OK,Stress Test 1-2,text,true,,4137,212,1,1,https://tanlx-web-app-a0d0hfdwf9due8h4.eastus2-01.azurewebsites.net/api/v1/Books/2?id=2,313,0,0
