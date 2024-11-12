@@ -188,7 +188,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: 'Archive JMeter report'
             inputs:
-              rootFolderOrFile: '/home/vm_user/_work/1/drop-perftests/jmeter-html-report'
+              rootFolderOrFile: '/home/tanlx/myagent/_work/1/drop-perftests/jmeter-html-report'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter-report.zip'
