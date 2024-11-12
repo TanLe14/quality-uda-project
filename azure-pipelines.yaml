@@ -177,24 +177,24 @@ stages:
       displayName: Install JMeter
     - bash: |
         apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/Stress.jmx \
-                                      -l log/jmeter/result-stress-test.csv \
-                                      -e -f -o log/jmeter/stress-test-html-report \
-                                      -j log/jmeter/jmeter-stress-test.log
+                                      -l automatedtesting/jmeter/result-stress-test.csv \
+                                      -e -f -o automatedtesting/jmeter/stress-test-html-report \
+                                      -j automatedtesting/jmeter/jmeter-stress-test.log
       displayName: JMeter stress test
     - bash: |
         apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/Endurance.jmx \
-                                      -l log/jmeter/result-endurance-test.csv \
-                                      -e -f -o log/jmeter/endurance-test-html-report \
-                                      -j log/jmeter/jmeter-endurance-test.log
+                                      -l automatedtesting/jmeter/result-endurance-test.csv \
+                                      -e -f -o automatedtesting/jmeter/endurance-test-html-report \
+                                      -j automatedtesting/jmeter/jmeter-endurance-test.log
 
       displayName: JMeter endurance test
     - task: ArchiveFiles@2
       displayName: Archive JMeter stress test HTML report
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/stress-test-html-report'
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report-$(Build.BuildId).zip'
+        archiveFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/stress-test-html-report-$(Build.BuildId).zip'
         verbose: true
 
     - task: ArchiveFiles@2
