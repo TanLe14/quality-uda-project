@@ -230,6 +230,7 @@ stages:
                 sudo apt-get install unzip -y
                 pip3 install --upgrade requests
                 pip3 install selenium
+                pip3 install webdriver_manager
 
                 cd ~/
                 DIR=/home/azurevmuser/app
