@@ -163,8 +163,6 @@ stages:
   jobs:
   - job: JMETERTests
     displayName: Test JMeter
-    pool:
-      vmImage: 'ubuntu-18.04'
     steps:
     - bash: |
         sudo apt-get install openjdk-11-jre-headless -y
