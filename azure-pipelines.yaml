@@ -188,7 +188,7 @@ stages:
                                       -j jmeter-endurance-test.log
 
       displayName: JMeter endurance test
-    - Script: ls $(System.DefaultWorkingDirectory)
+    - script: ls $(System.DefaultWorkingDirectory)
     
     - task: ArchiveFiles@2
       displayName: Archive JMeter stress test HTML report
