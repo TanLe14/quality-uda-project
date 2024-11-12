@@ -204,9 +204,7 @@ stages:
   - deployment: VMDeploy
     displayName: Selenium Tests
     environment:
-      name:  'test'       # ToDo: Change/provide a name
-      resourceType: VirtualMachine
-      tags: selenium      
+      name:  'test'       # ToDo: Change/provide a name     
     strategy:
       runOnce:
         deploy:
