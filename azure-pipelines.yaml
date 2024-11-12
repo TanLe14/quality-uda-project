@@ -170,12 +170,11 @@ stages:
                 tar -xf apache-jmeter-5.2.1.tgz
                 unzip -o $(Build.BuildId)-perftests.zip
                 
-                DIR=/home/tanlx/_work/1/drop-perftests/jmeter-html-report
                 if [ ! -d "$DIR" ]; then
                     rm -rf jmeter-html-report
                 fi
-                ./apache-jmeter-5.2.1/bin/jmeter -n -t Stress.jmx -l result-stress-test.csv -e -f -o jmeter-html-report -j jmeter-stress-test.log
-                ./apache-jmeter-5.2.1/bin/jmeter -n -t Endurance.jmx -l result-endurance-test.csv -e -f -o jmeter-html-report -j  jmeter-endurance-test.log
+                ./apache-jmeter-5.2.1/bin/jmeter -n -t Stress.jmx -l result-stress-test.csv -e -f -o '$(System.DefaultWorkingDirectory)/jmeter-html-report' -j '$(System.DefaultWorkingDirectory)/jmeter-stress-test.log'
+                ./apache-jmeter-5.2.1/bin/jmeter -n -t Endurance.jmx -l result-endurance-test.csv -e -f -o '$(System.DefaultWorkingDirectory)/jmeter-html-report' -j  '$(System.DefaultWorkingDirectory)/jmeter-endurance-test.log'
           
                 # check
                 ls                                                                    
@@ -184,7 +183,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: 'Archive JMeter report'
             inputs:
-              rootFolderOrFile: '/home/tanlx/_work/1/drop-perftests/jmeter-html-report'
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/jmeter-html-report'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter-report.zip'
