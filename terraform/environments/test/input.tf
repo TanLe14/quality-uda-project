@@ -19,5 +19,4 @@ variable "virtual_network_interface_name" {}
 variable "vm_name" {}
 variable "admin_user" {}
 variable "admin_ssh_key" {}
-variable "access_key" {}
 
