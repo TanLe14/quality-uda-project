@@ -164,6 +164,8 @@ stages:
             displayName: 'Run JMeter test suite against the App Service'
             inputs:
               script: |
+                ls
+                pwd
                 sudo apt-get upgrade -y
                 sudo apt-get install openjdk-11-jdk -y
                 sudo apt-get install openjdk-11-jre-headless -y
