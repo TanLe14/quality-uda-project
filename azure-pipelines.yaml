@@ -176,13 +176,13 @@ stages:
         ls -la
       displayName: Install JMeter
     - bash: |
-        apache-jmeter-5.4/bin/jmeter -n -t jmeter/Stress.jmx \
+        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/Stress.jmx \
                                       -l log/jmeter/result-stress-test.csv \
                                       -e -f -o log/jmeter/stress-test-html-report \
                                       -j log/jmeter/jmeter-stress-test.log
       displayName: JMeter stress test
     - bash: |
-        apache-jmeter-5.4/bin/jmeter -n -t jmeter/Endurance.jmx \
+        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/Endurance.jmx \
                                       -l log/jmeter/result-endurance-test.csv \
                                       -e -f -o log/jmeter/endurance-test-html-report \
                                       -j log/jmeter/jmeter-endurance-test.log
