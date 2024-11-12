@@ -57,7 +57,7 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'Azuredevops'
-        backendAzureRmStorageAccountName: 'tfstate403220699'
+        backendAzureRmStorageAccountName: 'tfstate73016353'
         backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'root.terraform.tfstate'
 
@@ -67,14 +67,14 @@ stages:
         provider: 'azurerm'
         command: 'validate'
 
-    # # Run Terraform Apply
-    # - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
-    #   displayName: Terraform apply
-    #   inputs:
-    #     provider: 'azurerm'
-    #     command: 'apply'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-    #     environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
+    # Run Terraform Apply
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: Terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
     # Destroy the resources in Azure by running a separate pipeline.
 
@@ -152,7 +152,7 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription: '$(azureServiceConnectionId)'     # ToDo
-              appName: 'project3-AppService'       # ToDo
+              appName: 'myApplication-AppService'       # ToDo
               resourceGroupName: '$(resourceGroupName)' 
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip       # ToDo: Use the published zip artifact.
