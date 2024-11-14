@@ -232,7 +232,7 @@ stages:
                 pip3 install webdriver_manager
 
                 cd ~/
-                DIR=/home/azurevmuser/app
+                DIR=/home/tanlx/app
                 if [ ! -d "$DIR" ]; then
                     mkdir app
                 fi
@@ -247,7 +247,7 @@ stages:
                 google-chrome --product-version
                 /usr/local/bin/chromedriver -v
 
-                export PATH=$PATH:/home/azurevmuser/app
+                export PATH=$PATH:/home/tanlx/app
                 echo "Starting Selenium Tests"
                 python3 login.py >> selenium.log
 
